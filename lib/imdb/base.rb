@@ -106,9 +106,9 @@ module Imdb
     def poster
       src = document.at("a[@name='poster'] img")['src'] rescue nil
       case src
-      when /^(http:.+@@)/
+      when /^(https?:.+@@)/
         Regexp.last_match[1] + '.jpg'
-      when /^(http:.+?)\.[^\/]+$/
+      when /^(https?:.+?)\.[^\/]+$/
         Regexp.last_match[1] + '.jpg'
       end
     end
@@ -165,7 +165,7 @@ module Imdb
       if @title && !force_refresh
         @title
       else
-        @title = document.at('h1').inner_html.split('<span').first.strip.imdb_unescape_html rescue nil
+        @title = document.at("div[@id='tn15title']/h1/text()") rescue nil
       end
     end
 
