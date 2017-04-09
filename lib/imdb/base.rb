@@ -11,9 +11,10 @@ module Imdb
     # will be performed when a new object is created. Only when you use an
     # accessor that needs the remote data, a HTTP request is made (once).
     #
-    def initialize(imdb_id, title = nil)
+    def initialize(imdb_id, title = nil, page_body = nil)
       @id = imdb_id
       @url = "http://akas.imdb.com/title/tt#{imdb_id}/combined"
+      @document = Nokogiri::HTML(page_body) if page_body
       @title = title.gsub(/"/, '').strip if title
     end
 
